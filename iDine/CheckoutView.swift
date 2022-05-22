@@ -12,6 +12,7 @@ struct CheckoutView: View {
     
     let paymentTypes = ["Cash", "Credit Card", "iDine Points"]
     let typAmounts = [10, 15, 20, 25, 0]
+    let pickupTimes = ["Now", "Toning", "Tomorow"]
     
     var totalPrice: String {
         let formatter = NumberFormatter()
@@ -27,9 +28,11 @@ struct CheckoutView: View {
     @State private var loyalityNumber = ""
     @State private var tipAmount = 15
     @State private var showingPaymentAlert = false
+    @State private var pickupTime = "Now"
     
     var body: some View {
         Form {
+            
             Section{
                 Picker("How do you want to pay?", selection: $paymentType) {
                     ForEach(paymentTypes, id: \.self) {
@@ -40,8 +43,17 @@ struct CheckoutView: View {
                 if addLoyalityDetails {
                 TextField("Enter your iDini ID", text: $loyalityNumber)
                 }
-                
             }
+            
+            Section(header: Text("When to deliver your order?")) {
+                Picker("Time", selection: $pickupTime) {
+                    ForEach(pickupTimes, id: \.self) {
+                        Text("\($0)")
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+            
             Section(header: Text("Add a tip?")) {
                 Picker("Percentage", selection: $tipAmount) {
                     ForEach(typAmounts, id: \.self){
@@ -50,6 +62,7 @@ struct CheckoutView: View {
                 }
                 .pickerStyle(.segmented)
             }
+            
             Section(header:
                         Text("Total: \(totalPrice)")
                 .font(.largeTitle)
@@ -62,8 +75,8 @@ struct CheckoutView: View {
         .navigationTitle("Payment")
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $showingPaymentAlert) {
-            Alert(title: Text("Order confimed"), message: Text("Your total was \(totalPrice) - thank you!"), dismissButton: .default(Text("OK")))
-        }
+            Alert(title: Text("Order confimed"), message: Text("Your total was \(totalPrice). \n Your order will be delivered \(pickupTime). \n Thank you!"), dismissButton: .default(Text("OK")))
+        }.animation(.default, value: 1)
     }
 }
 
