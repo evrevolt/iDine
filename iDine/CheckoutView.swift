@@ -32,19 +32,18 @@ struct CheckoutView: View {
     
     var body: some View {
         Form {
-            
             Section{
                 Picker("How do you want to pay?", selection: $paymentType) {
                     ForEach(paymentTypes, id: \.self) {
                         Text($0)
                     }
                 }
-                Toggle("Add iDini loyality card", isOn: $addLoyalityDetails.animation())
+                Toggle("Add iDini loyality card", isOn: $addLoyalityDetails.animation()).toggleStyle(.button)
+                    .foregroundColor(.green)
                 if addLoyalityDetails {
                 TextField("Enter your iDini ID", text: $loyalityNumber)
                 }
             }
-            
             Section(header: Text("When to deliver your order?")) {
                 Picker("Time", selection: $pickupTime) {
                     ForEach(pickupTimes, id: \.self) {

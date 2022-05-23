@@ -29,7 +29,12 @@ struct ItemDetail: View {
                 .padding()
             
             Button("Order this") {
-                order.add(item: item)
+                order.addOrder(item: item)
+            }
+            .font(.headline)
+            
+            Button("Favorites this") {
+                order.addFavorites(item: item)
             }
             .font(.headline)
             

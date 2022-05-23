@@ -13,7 +13,6 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            
         List {
             ForEach(menu) { selection in
                 Section(header: Text(selection.name)) {
