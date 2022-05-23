@@ -11,6 +11,7 @@ struct ItemDetail: View {
     
     let item: MenuItem
     @EnvironmentObject var order: Order
+    @State private var alertFavoritesAction = false
     
     var body: some View {
         VStack {
@@ -34,9 +35,16 @@ struct ItemDetail: View {
             .font(.headline)
             
             Button("Favorites this") {
-                order.addFavorites(item: item)
+                if order.itemsFavorites.contains(item) {
+                    alertFavoritesAction = true
+                } else {
+                    order.addFavorites(item: item)
+                }
             }
             .font(.headline)
+            .alert(isPresented: $alertFavoritesAction) {
+                Alert(title: Text("Данный элемент уже добавлен в избранное"))
+            }
             
             Spacer()
         }
