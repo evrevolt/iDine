@@ -29,12 +29,8 @@ struct ItemDetail: View {
             Text(item.description)
                 .padding()
             
-            Button("Order this") {
-                order.addOrder(item: item)
-            }
-            .font(.headline)
             
-            Button("Favorites this") {
+            Button("Add to Favorites this") {
                 if order.itemsFavorites.contains(item) {
                     alertFavoritesAction = true
                 } else {
@@ -45,6 +41,19 @@ struct ItemDetail: View {
             .alert(isPresented: $alertFavoritesAction) {
                 Alert(title: Text("Данный элемент уже добавлен в избранное"))
             }
+            .padding()
+            .foregroundColor(.white)
+            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(40)
+            
+            Button("Order this") {
+                order.addOrder(item: item)
+            }
+            .font(.headline)
+            .padding()
+            .foregroundColor(.white)
+            .background(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(40)
             
             Spacer()
         }
